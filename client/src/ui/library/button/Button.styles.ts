@@ -9,8 +9,7 @@ export const ButtonWrapper = styled.button<IButtonProps>`
     padding: ${p => p.padding};
     margin: ${p => p.margin};
     text-align: center;
-    position: relative;
-    border-radius: 4px;
+    border-radius: ${p => p.borderRadius};
 
     &:enabled {
         cursor: pointer;
