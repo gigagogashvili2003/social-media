@@ -17,6 +17,7 @@
     "react-router-dom": "^6.7.0",
     "styled-components": "^5.3.6",
     "url": "^0.11.0",
+    "vite-tsconfig-paths": "^4.0.5",
     "zustand": "^4.3.2"
   },
   "devDependencies": {

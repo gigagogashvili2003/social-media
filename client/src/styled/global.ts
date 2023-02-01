@@ -34,6 +34,10 @@ body {
     line-height:1;
 }
 
+html {
+    font-family: "Poppins", sans-serif;
+}
+
 article,aside,details,figcaption,figure,
 footer,header,hgroup,menu,nav,section {
     display:block;
