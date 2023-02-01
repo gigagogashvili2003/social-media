@@ -10,9 +10,17 @@ export const ButtonWrapper = styled.button<IButtonProps>`
     margin: ${p => p.margin};
     text-align: center;
     border-radius: ${p => p.borderRadius};
+    position: relative;
 
     &:enabled {
         cursor: pointer;
+
+        ${({ loading }) =>
+            loading &&
+            css`
+                display: flex;
+                align-items: center;
+            `}
     }
 
     &:active:enabled {

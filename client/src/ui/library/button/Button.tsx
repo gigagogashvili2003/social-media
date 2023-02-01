@@ -1,4 +1,5 @@
 import { ButtonType, FC } from '@/types';
+import ButtonLoader from '../../../ui/components/loaders/buttonLoader/ButtonLoader';
 import { ButtonWrapper } from './Button.styles';
 
 export interface IButtonProps {
@@ -10,13 +11,15 @@ export interface IButtonProps {
     margin?: string;
     borderRadius?: string;
     disabled?: boolean;
+    loading?: boolean;
 }
 
 const Button: FC<IButtonProps> = props => {
-    const { children, type, clickHandler, buttonType, padding, margin, borderRadius, disabled } = props;
+    const { children, type, clickHandler, buttonType, padding, margin, borderRadius, disabled, loading } = props;
 
     return (
         <ButtonWrapper
+            loading={loading}
             disabled={disabled}
             borderRadius={borderRadius}
             padding={padding}
@@ -26,6 +29,7 @@ const Button: FC<IButtonProps> = props => {
             onClick={clickHandler}
         >
             {children}
+            {loading && <ButtonLoader />}
         </ButtonWrapper>
     );
 };
@@ -37,6 +41,7 @@ Button.defaultProps = {
     margin: '20px',
     borderRadius: '4px;',
     disabled: false,
+    loading: false,
 };
 
 export default Button;
