@@ -1,4 +1,5 @@
-import ThemeProvider from './/styled/theme-provider';
+import ThemeProvider from './styled/theme-provider';
+import Button from './ui/library/button/Button';
 import Modal from './ui/library/modal/Modal';
 import { useModal } from './utils/hooks/useModal';
 
@@ -12,7 +13,7 @@ function App() {
                     <h1>hello</h1>
                 </div>
             </Modal>
-            <button onClick={openModal}>HEllo Test</button>
+            <Button>Hello</Button>
         </ThemeProvider>
     );
 }
