@@ -1,47 +1,26 @@
 import { ButtonType, FC } from '@/types';
-import ButtonLoader from '../../../ui/components/loaders/buttonLoader/ButtonLoader';
+import { ButtonHTMLAttributes } from 'react';
+import ButtonLoader from '@/ui/components/loaders/buttonLoader/ButtonLoader';
 import { ButtonWrapper } from './Button.styles';
 
-export interface IButtonProps {
-    type?: 'button' | 'submit' | 'reset';
-    clickHandler?: React.MouseEventHandler<HTMLButtonElement>;
+export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     buttonType?: ButtonType;
     buttonText?: string;
     padding?: string;
     margin?: string;
     borderRadius?: string;
-    disabled?: boolean;
-    loading?: boolean;
+    isLoading?: boolean;
 }
 
 const Button: FC<IButtonProps> = props => {
-    const { children, type, clickHandler, buttonType, padding, margin, borderRadius, disabled, loading } = props;
+    const { children, buttonType = 'primary', padding = '10px 35px', margin = '20px', borderRadius = '4px', isLoading = false, ...rest } = props;
 
     return (
-        <ButtonWrapper
-            loading={loading}
-            disabled={disabled}
-            borderRadius={borderRadius}
-            padding={padding}
-            margin={margin}
-            buttonType={buttonType}
-            type={type}
-            onClick={clickHandler}
-        >
+        <ButtonWrapper isLoading={isLoading} borderRadius={borderRadius} padding={padding} margin={margin} buttonType={buttonType} {...rest}>
             {children}
-            {loading && <ButtonLoader />}
+            {isLoading && <ButtonLoader />}
         </ButtonWrapper>
     );
-};
-
-Button.defaultProps = {
-    type: 'button',
-    buttonType: 'primary',
-    padding: '10px 35px',
-    margin: '20px',
-    borderRadius: '4px;',
-    disabled: false,
-    loading: false,
 };
 
 export default Button;

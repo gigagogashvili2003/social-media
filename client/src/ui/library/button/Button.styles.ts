@@ -15,8 +15,8 @@ export const ButtonWrapper = styled.button<IButtonProps>`
     &:enabled {
         cursor: pointer;
 
-        ${({ loading }) =>
-            loading &&
+        ${({ isLoading }) =>
+            isLoading &&
             css`
                 display: flex;
                 align-items: center;

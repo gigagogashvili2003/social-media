@@ -10,9 +10,12 @@ export default defineConfig({
         port: 3000,
         strictPort: true,
         open: true,
+        watch: {
+            usePolling: true,
+        },
     },
 
     resolve: {
-        alias: [{ find: '@', replacement: path.resolve(__dirname, './') }],
+        alias: [{ find: '@', replacement: path.resolve(__dirname, './src') }],
     },
 });

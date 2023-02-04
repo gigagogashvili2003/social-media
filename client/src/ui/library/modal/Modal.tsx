@@ -1,29 +1,51 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import CloseIcon from '../../../assets/svgComponents/CloseIcon';
+import CloseIcon from '@/assets/svgComponents/CloseIcon';
 import { FC } from '@/types';
 import { CloseIconWrapper, ModalBody, ModalContainer, ModalHeader, ModalLabelWrapper, ModalBackdrop } from './Modal.styles';
 
-interface IModalProps {
+export interface IModalProps {
     isOpen?: boolean;
-    closeModal: () => void;
-    closeIcon: boolean;
+    closeModal?: () => void;
+    closeIcon?: boolean;
     closeOnBackdropClick?: boolean;
     label?: string;
     closeOnEscape?: boolean;
     padding?: string;
     backdrop?: boolean;
+    width?: string;
+    height?: string;
+    maxWidth?: string;
+    maxHeight?: string;
+    minWidth?: string;
+    minHeight?: string;
 }
 
 const Modal: FC<IModalProps> = props => {
-    const { isOpen, closeModal, closeIcon, closeOnBackdropClick, children, label, closeOnEscape, padding, backdrop } = props;
+    const {
+        isOpen,
+        closeModal,
+        closeIcon = true,
+        closeOnBackdropClick = false,
+        children,
+        label,
+        closeOnEscape = false,
+        padding = '25px 35px',
+        backdrop = true,
+        width,
+        height,
+        maxHeight,
+        maxWidth,
+        minHeight = '600px',
+        minWidth = '800px',
+    } = props;
 
     function backdropClickHandler() {
-        if (closeOnBackdropClick) closeModal();
+        if (closeOnBackdropClick && closeModal) closeModal();
     }
 
     function closeOnEscapeHandler(event: KeyboardEvent): void {
-        if (closeOnEscape && event.key === 'Escape') closeModal();
+        if (closeOnEscape && event.key === 'Escape' && closeModal) closeModal();
     }
 
     useEffect(() => {
@@ -37,19 +59,29 @@ const Modal: FC<IModalProps> = props => {
         return createPortal(
             <>
                 {backdrop && <ModalBackdrop onClick={backdropClickHandler} />}
-                <ModalContainer padding={padding}>
-                    <ModalHeader label={label}>
-                        {label && (
-                            <ModalLabelWrapper>
-                                <h3>{label}</h3>
-                            </ModalLabelWrapper>
-                        )}
-                        {closeIcon && (
-                            <CloseIconWrapper onClick={closeModal}>
-                                <CloseIcon />
-                            </CloseIconWrapper>
-                        )}
-                    </ModalHeader>
+                <ModalContainer
+                    width={width}
+                    height={height}
+                    maxHeight={maxHeight}
+                    minHeight={minHeight}
+                    maxWidth={maxWidth}
+                    minWidth={minWidth}
+                    padding={padding}
+                >
+                    {(label || closeIcon) && (
+                        <ModalHeader label={label}>
+                            {label && (
+                                <ModalLabelWrapper>
+                                    <h3>{label}</h3>
+                                </ModalLabelWrapper>
+                            )}
+                            {closeIcon && (
+                                <CloseIconWrapper onClick={closeModal}>
+                                    <CloseIcon />
+                                </CloseIconWrapper>
+                            )}
+                        </ModalHeader>
+                    )}
                     <ModalBody>{children}</ModalBody>
                 </ModalContainer>
             </>,
@@ -57,14 +89,6 @@ const Modal: FC<IModalProps> = props => {
         );
     }
     return null;
-};
-
-Modal.defaultProps = {
-    padding: '25px 35px',
-    closeOnBackdropClick: false,
-    closeIcon: true,
-    closeOnEscape: false,
-    backdrop: true,
 };
 
 export default Modal;
