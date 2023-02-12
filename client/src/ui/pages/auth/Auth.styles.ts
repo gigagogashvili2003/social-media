@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LoginPageContainer = styled.div`
     width: 100%;
     height: 100vh;
-    background-color: royalblue;
+    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
 `;
 
 export const LoginModalBody = styled.div`
@@ -34,6 +34,10 @@ export const LoginModalBody = styled.div`
             flex-direction: column;
             width: 100%;
             row-gap: 10px;
+        }
+
+        .action_button {
+            width: 100%;
         }
     }
 `;

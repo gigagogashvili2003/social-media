@@ -6,6 +6,7 @@ export const ButtonWrapper = styled.button<IButtonProps>`
     outline: none;
     border: none;
 
+    width: 100%;
     padding: ${p => p.padding};
     margin: ${p => p.margin};
     text-align: center;

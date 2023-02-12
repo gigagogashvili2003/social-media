@@ -1,6 +1,5 @@
 import Modal from '@/ui/library/modal/Modal';
 import { useModal } from '@/utils/hooks/useModal';
-import React from 'react';
 import LoginPageUserPhoto from '@/assets/images/LoginPageUserPhoto.png';
 import { LoginPageContainer, LoginModalBody } from './Auth.styles';
 import Input from '@/ui/library/input/Input';
@@ -25,11 +24,13 @@ const Login = () => {
                         </div>
 
                         <div className="inputs_block">
-                            <Input AbsoluteComponentIcon={<EmailIcon maxHeight="25px" maxWidth="25px" />} placeholder="Email" />
-                            <Input AbsoluteComponentIcon={<PasswordIcon maxHeight="25px" maxWidth="25px" />} placeholder="Password" />
+                            <Input AbsoluteComponentIcon={<EmailIcon maxHeight="15px" maxWidth="15px" />} placeholder="Email" />
+                            <Input AbsoluteComponentIcon={<PasswordIcon style={{ maxWidth: '15px', maxHeight: '15px' }} />} placeholder="Password" />
                         </div>
                         <div className="action_button">
-                            <Button buttonType="success">Login</Button>
+                            <Button margin="30px 0 0" buttonType="success" borderRadius="25px" padding="15px 10px">
+                                Login
+                            </Button>
                         </div>
                     </div>
                 </LoginModalBody>

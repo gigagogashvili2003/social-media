@@ -17,7 +17,7 @@ export const InputWrapper = styled.input<IProps>`
     border-radius: 6px;
     font-size: 18px;
     padding: 12px 20px;
-    border: 1px solid grey;
+    border: 1px solid ${p => p.theme.INPUT_BORDER_COLOR};
     max-height: 45px;
 
     ${({ AbsoluteComponentIcon }) =>
@@ -35,6 +35,7 @@ export const ClearIconWrapper = styled.div`
     margin: auto;
     svg {
         width: 15px;
+        fill: ${p => p.theme.SVG_FILL};
     }
 `;
 
@@ -53,5 +54,5 @@ export const AbsoluteComponentIconWrapper = styled.div`
     pointer-events: none;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
-    border-right: 1px solid grey;
+    border-right: 1px solid ${p => p.theme.INPUT_BORDER_COLOR};
 `;

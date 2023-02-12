@@ -13,7 +13,7 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: FC<IButtonProps> = props => {
-    const { children, buttonType = 'primary', padding = '10px 35px', margin = '20px', borderRadius = '4px', isLoading = false, ...rest } = props;
+    const { children, buttonType = 'primary', padding = '10px 35px', margin = '', borderRadius = '4px', isLoading = false, ...rest } = props;
 
     return (
         <ButtonWrapper isLoading={isLoading} borderRadius={borderRadius} padding={padding} margin={margin} buttonType={buttonType} {...rest}>
