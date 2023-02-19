@@ -1,14 +1,8 @@
-import { useState } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { routes } from './routes/routes';
 import ThemeProvider from './styled/theme-provider';
-import { useModal } from './utils/hooks/useModal';
 
 function App() {
-    const { isOpen, openModal, closeModal } = useModal(false);
-
-    const [loading, setLoading] = useState(false);
-
     return (
         <BrowserRouter>
             <ThemeProvider theme="light">

@@ -1,8 +1,7 @@
-import CloseIcon from '../../../assets/svgComponents/CloseIcon';
+import CloseIcon from '@/assets/svgComponents/CloseIcon';
 import { FC, InputType } from '@/types';
 import { ClearIconWrapper, InputContainer, InputLabel, InputWrapper, AbsoluteComponentIconWrapper } from './Input.styles';
 import React, { forwardRef, InputHTMLAttributes } from 'react';
-import { UseFormSetValue, FieldValues } from 'react-hook-form';
 
 export interface IProps extends InputHTMLAttributes<HTMLInputElement> {
     inputType?: InputType;
@@ -10,20 +9,18 @@ export interface IProps extends InputHTMLAttributes<HTMLInputElement> {
     clearIcon?: boolean;
     AbsoluteComponentIcon?: React.ReactNode;
     ref?: React.ForwardedRef<HTMLInputElement>;
-    setValue?: UseFormSetValue<FieldValues>;
     name: string;
     id?: string;
+    hasError?: boolean;
+    isSuccess?: boolean;
+    clearInput?: () => void;
 }
 
 const Input: FC<IProps> = forwardRef((props, ref) => {
-    const { inputType = 'text', label, clearIcon = true, id, setValue, name, AbsoluteComponentIcon, ...rest } = props;
-
-    const clearInput = () => {
-        if (typeof setValue === 'function') setValue(name, '');
-    };
+    const { inputType = 'text', label, hasError, isSuccess, clearInput, clearIcon = true, id, name, AbsoluteComponentIcon, ...rest } = props;
 
     return (
-        <InputContainer>
+        <InputContainer hasError={hasError} isSuccess={isSuccess}>
             {label && (
                 <InputLabel className="input_label" htmlFor={id || name} input-type={inputType}>
                     {label}
@@ -31,10 +28,10 @@ const Input: FC<IProps> = forwardRef((props, ref) => {
             )}
             <InputWrapper id={id || name} name={name} type={inputType} AbsoluteComponentIcon={AbsoluteComponentIcon} ref={ref} {...rest} />
 
-            {AbsoluteComponentIcon && <AbsoluteComponentIconWrapper>{AbsoluteComponentIcon}</AbsoluteComponentIconWrapper>}
+            {AbsoluteComponentIcon && <AbsoluteComponentIconWrapper className="absolute_comp">{AbsoluteComponentIcon}</AbsoluteComponentIconWrapper>}
 
             {clearIcon && (
-                <ClearIconWrapper onClick={clearInput}>
+                <ClearIconWrapper className="clear_icon" onClick={clearInput}>
                     <CloseIcon />
                 </ClearIconWrapper>
             )}

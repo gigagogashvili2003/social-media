@@ -5,6 +5,7 @@ export const ModalContainer = styled.div<IModalProps>`
     min-width: ${p => p.minWidth};
     min-height: ${p => p.minHeight};
     max-height: calc(100vh - ${p => p.minHeight});
+    height: 100%;
     max-width: calc(100vw - ${p => p.minHeight});
     background-color: #fff;
     position: fixed;
@@ -35,6 +36,7 @@ export const ModalBackdrop = styled.div`
 
 export const ModalBody = styled.div`
     width: 100%;
+    height: 100%;
 `;
 
 export const CloseIconWrapper = styled.div``;

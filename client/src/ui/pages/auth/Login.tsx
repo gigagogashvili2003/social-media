@@ -1,13 +1,14 @@
 import Modal from '@/ui/library/modal/Modal';
 import { useModal } from '@/utils/hooks/useModal';
 import LoginPageUserPhoto from '@/assets/images/LoginPageUserPhoto.png';
-import { LoginPageContainer, LoginModalBody } from './Auth.styles';
+import { AuthPageContainer, LoginModalBody } from './Auth.styles';
 import Input from '@/ui/library/input/Input';
 import Button from '@/ui/library/button/Button';
 import EmailIcon from '@/assets/svgComponents/EmailIcon';
 import PasswordIcon from '@/assets/svgComponents/PasswordIcon';
 import CustomFormProvider from '@/ui/library/form-provider/CustomFormProvider';
 import FormInput from '@/ui/library/form-input/FormInput';
+import { emailValidation, passwordValidation } from '@/utils/validatons';
 
 const Login = () => {
     const { isOpen, openModal, closeModal } = useModal(true);
@@ -18,7 +19,7 @@ const Login = () => {
     };
 
     return (
-        <LoginPageContainer>
+        <AuthPageContainer>
             <Modal padding="177px 130px 33px 95px" minWidth="960px" minHeight="700px" isOpen={isOpen} closeIcon={false} backdrop={false}>
                 <LoginModalBody>
                     <div className="img_block">
@@ -37,12 +38,14 @@ const Login = () => {
                                     id="email"
                                     placeholder="Email"
                                     AbsoluteComponentIcon={<EmailIcon maxHeight="15px" maxWidth="15px" />}
+                                    validate={emailValidation}
                                 />
                                 <FormInput
                                     name="password"
                                     id="password"
                                     AbsoluteComponentIcon={<PasswordIcon style={{ maxWidth: '15px', maxHeight: '15px' }} />}
                                     placeholder="Password"
+                                    validate={passwordValidation}
                                 />
                             </div>
                             <div className="action_button">
@@ -54,7 +57,7 @@ const Login = () => {
                     </CustomFormProvider>
                 </LoginModalBody>
             </Modal>
-        </LoginPageContainer>
+        </AuthPageContainer>
     );
 };
 

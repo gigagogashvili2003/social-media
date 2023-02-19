@@ -1,10 +1,71 @@
 import styled, { css } from 'styled-components';
 import { IProps } from './Input';
 
-export const InputContainer = styled.div`
-    width: 300px;
-    /* margin: 20px; */
+export const InputContainer = styled.div<{ hasError?: boolean; isSuccess?: boolean }>`
+    width: 100%;
     position: relative;
+
+    ${({ hasError, theme }) =>
+        hasError &&
+        css`
+            input,
+            .absolute_comp {
+                border-color: ${theme.RED};
+            }
+
+            input::placeholder {
+                color: ${p => p.theme.RED};
+            }
+
+            .clear_icon {
+                svg {
+                    fill: ${theme.RED};
+                }
+            }
+
+            .absolute_comp {
+                svg {
+                    fill: ${theme.RED};
+                    g {
+                        path {
+                            fill: ${theme.RED};
+                        }
+                    }
+                    path {
+                        fill: ${theme.RED};
+                    }
+                }
+            }
+        `}
+
+    ${({ isSuccess, theme }) =>
+        isSuccess &&
+        css`
+            input,
+            .absolute_comp {
+                border-color: ${theme.GREEN};
+            }
+
+            .absolute_comp {
+                svg {
+                    fill: ${theme.GREEN};
+                    g {
+                        path {
+                            fill: ${theme.GREEN};
+                        }
+                    }
+                    path {
+                        fill: ${theme.GREEN};
+                    }
+                }
+            }
+
+            .clear_icon {
+                svg {
+                    fill: ${theme.GREEN};
+                }
+            }
+        `}
 `;
 
 export const InputLabel = styled.label``;
