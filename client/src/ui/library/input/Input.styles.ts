@@ -33,7 +33,9 @@ export const ClearIconWrapper = styled.div`
     transform: translateY(-50%);
     right: 10px;
     margin: auto;
+    cursor: pointer;
     svg {
+        display: block;
         width: 15px;
         fill: ${p => p.theme.SVG_FILL};
     }
