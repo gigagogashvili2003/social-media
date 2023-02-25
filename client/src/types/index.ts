@@ -8,3 +8,11 @@ export type ButtonType = 'primary' | 'secondary' | 'success' | 'danger' | 'warni
 export type InputType = 'checkbox' | 'date' | 'file' | 'number' | 'hidden' | 'text' | 'time' | 'password';
 
 export type IFormMethodsReturnType = Record<string, any>;
+
+export interface IUserType {
+    firstname: string;
+    lastname: string;
+    username: string;
+    email: string;
+    password: string;
+}

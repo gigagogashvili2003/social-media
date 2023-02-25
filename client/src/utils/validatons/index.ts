@@ -1,3 +1,5 @@
+import { FieldValues, UseFormTrigger, UseFormWatch } from 'react-hook-form';
+
 export const emailRegex = new RegExp(
     "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
 );
@@ -11,14 +13,14 @@ export const emailValidation = (email: string) => {
     return isEmailValid ? true : 'Invalid Email Address!';
 };
 
-export const passwordValidation = (password: string) => {
+export const passwordValidation = (trigger: UseFormTrigger<FieldValues>, password: string) => {
     const isPasswordValid = passwordRegex.test(password);
-
+    trigger('confirmPassword');
     return isPasswordValid ? true : 'Password is invalid!';
 };
 
-export const confirmPasswordValidation = (confirmPassword: string, values: Record<string, any>) => {
-    const isConfirmPasswordValid = confirmPassword.trim() === values.password.trim();
+export const confirmPasswordValidation = (watch: UseFormWatch<FieldValues>, confirmPassword: string) => {
+    const isConfirmPasswordValid = confirmPassword.trim() === watch('password').trim();
 
     return isConfirmPasswordValid ? true : 'Passwords doesnt match!';
 };

@@ -13,6 +13,7 @@ export default defineConfig({
         watch: {
             usePolling: true,
         },
+        base: 'http://localhost:9000/api/',
     },
 
     resolve: {

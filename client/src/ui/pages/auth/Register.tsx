@@ -1,6 +1,6 @@
 import Modal from '@/ui/library/modal/Modal';
 import { useModal } from '@/utils/hooks/useModal';
-import { RegisterModalBody, AuthPageContainer } from './Auth.styles';
+import { RegisterModalBody, AuthPageContainer, HaveAnAccountBlock, AuthBlock } from './Auth.styles';
 import Button from '@/ui/library/button/Button';
 import EmailIcon from '@/assets/svgComponents/EmailIcon';
 import PasswordIcon from '@/assets/svgComponents/PasswordIcon';
@@ -8,7 +8,10 @@ import CustomFormProvider from '@/ui/library/form-provider/CustomFormProvider';
 import FormInput from '@/ui/library/form-input/FormInput';
 import { confirmPasswordValidation, emailValidation, passwordValidation, usernameValidation } from '@/utils/validatons';
 import Flex from '@/ui/components/flex/Flex';
-import { IFormMethodsReturnType } from '@/types';
+import { Link } from 'react-router-dom';
+import { FieldErrors, FieldValue, FieldValues } from 'react-hook-form';
+import { sendUserSignupRequest } from '@/services/user';
+import { IUserType } from '@/types';
 
 const Register = () => {
     const { isOpen, openModal, closeModal } = useModal(true);
@@ -22,17 +25,23 @@ const Register = () => {
         confirmPassword: '',
     };
 
+    console.log(import.meta.env);
+
+    const sendRegisterRequest = async (data: FieldValues) => {
+        await sendUserSignupRequest(data);
+    };
+
     return (
         <AuthPageContainer>
             <Modal minWidth="960px" minHeight="700px" isOpen={isOpen} closeIcon={false} backdrop={false}>
                 <RegisterModalBody>
-                    <CustomFormProvider formWith="80%" defaultValues={defaultInputValues}>
+                    <CustomFormProvider onSubmit={sendRegisterRequest} formWith="80%" defaultValues={defaultInputValues}>
                         {({ methods }: any) => {
                             const passwordError = methods.getFieldState('password')?.error;
                             const disableConfirmPassword = !methods.watch('password') || passwordError;
 
                             return (
-                                <div className="auth_block">
+                                <AuthBlock>
                                     <div className="title">
                                         <h1>Member Register</h1>
                                     </div>
@@ -76,15 +85,15 @@ const Register = () => {
                                                 id="password"
                                                 AbsoluteComponentIcon={<PasswordIcon style={{ maxWidth: '15px', maxHeight: '15px' }} />}
                                                 placeholder="Password"
-                                                validate={passwordValidation}
+                                                validate={passwordValidation.bind(null, methods.trigger)}
                                             />
                                             <FormInput
                                                 name="confirmPassword"
                                                 id="confirmPassword"
                                                 AbsoluteComponentIcon={<PasswordIcon style={{ maxWidth: '15px', maxHeight: '15px' }} />}
                                                 placeholder="Repeat Password"
-                                                validate={confirmPasswordValidation}
                                                 disabled={disableConfirmPassword}
+                                                validate={confirmPasswordValidation.bind(null, methods.watch)}
                                             />
                                         </Flex>
                                     </div>
@@ -93,10 +102,18 @@ const Register = () => {
                                             Register
                                         </Button>
                                     </div>
-                                </div>
+                                </AuthBlock>
                             );
                         }}
                     </CustomFormProvider>
+                    <HaveAnAccountBlock>
+                        <span>
+                            Already have an account?{' '}
+                            <Link to="/login" replace>
+                                Login
+                            </Link>
+                        </span>
+                    </HaveAnAccountBlock>
                 </RegisterModalBody>
             </Modal>
         </AuthPageContainer>

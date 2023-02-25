@@ -1,14 +1,14 @@
 import Modal from '@/ui/library/modal/Modal';
 import { useModal } from '@/utils/hooks/useModal';
 import LoginPageUserPhoto from '@/assets/images/LoginPageUserPhoto.png';
-import { AuthPageContainer, LoginModalBody } from './Auth.styles';
-import Input from '@/ui/library/input/Input';
+import { AuthBlock, AuthPageContainer, HaveAnAccountBlock, LoginModalBody } from './Auth.styles';
 import Button from '@/ui/library/button/Button';
 import EmailIcon from '@/assets/svgComponents/EmailIcon';
 import PasswordIcon from '@/assets/svgComponents/PasswordIcon';
 import CustomFormProvider from '@/ui/library/form-provider/CustomFormProvider';
 import FormInput from '@/ui/library/form-input/FormInput';
 import { emailValidation, passwordValidation } from '@/utils/validatons';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const { isOpen, openModal, closeModal } = useModal(true);
@@ -26,8 +26,8 @@ const Login = () => {
                         <img src={LoginPageUserPhoto} alt="photo" />
                     </div>
 
-                    <CustomFormProvider defaultValues={defaultInputValues}>
-                        <div className="auth_block">
+                    <CustomFormProvider formWith="50%" defaultValues={defaultInputValues}>
+                        <AuthBlock>
                             <div className="title">
                                 <h1>Member Login</h1>
                             </div>
@@ -53,7 +53,15 @@ const Login = () => {
                                     Login
                                 </Button>
                             </div>
-                        </div>
+                        </AuthBlock>
+                        <HaveAnAccountBlock>
+                            <span>
+                                Dont have account?{' '}
+                                <Link to="/register" replace>
+                                    Sign Up
+                                </Link>
+                            </span>
+                        </HaveAnAccountBlock>
                     </CustomFormProvider>
                 </LoginModalBody>
             </Modal>
