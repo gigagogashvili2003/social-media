@@ -1,4 +1,4 @@
-import { Model, model, Schema } from "mongoose";
+import { Model, model, ObjectId, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 
 export interface IUserType {
@@ -7,10 +7,18 @@ export interface IUserType {
   username: string;
   email: string;
   password: string;
+  isVerified: boolean;
+  _id?: ObjectId;
+}
+export interface ILogin {
+  username: string;
+  email?: string;
+  password: string;
 }
 
 interface IUserModal extends Model<IUserType> {
-  signup(fields: IUserType): Promise<IUserType>;
+  signup(fields: IUserType): Promise<any>;
+  login(fields: ILogin): any;
 }
 
 const userSchema = new Schema<IUserType, IUserModal>({
@@ -26,6 +34,10 @@ const userSchema = new Schema<IUserType, IUserModal>({
     type: String,
     required: true,
     unique: true,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
   },
   email: {
     type: String,
@@ -64,6 +76,30 @@ userSchema.statics.signup = async function (fields: IUserType) {
       username,
       email,
     });
+  } catch (err: any) {
+    throw new Error(err);
+  }
+
+  return user;
+};
+
+userSchema.statics.login = async function (fields: ILogin) {
+  const { username, password, email } = fields;
+
+  const findWithUsername = await this.findOne({ username: username });
+  const findWithEmail = await this.findOne({ email: email });
+
+  let user;
+
+  if (findWithUsername) user = findWithUsername;
+  if (findWithEmail) user = findWithEmail;
+
+  if (!user) throw new Error("User not found!");
+
+  try {
+    const comparePassword = await bcrypt.compare(password, user.password);
+
+    if (!comparePassword) throw new Error("Invalid password!");
   } catch (err: any) {
     throw new Error(err);
   }

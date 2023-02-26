@@ -1,5 +1,4 @@
 import { FunctionComponent, ReactNode } from 'react';
-import { UseFormReturn } from 'react-hook-form';
 
 export type FC<Props = Record<string, any>> = FunctionComponent<Props & { children?: JSX.Element | ReactNode | Function }>;
 
@@ -16,3 +15,13 @@ export interface IUserType {
     email: string;
     password: string;
 }
+
+export interface IUserLoginType {
+    username: string;
+    email?: string;
+    password: string;
+}
+
+// Toast
+export type ToastType = 'success' | 'warning' | 'error' | 'info';
+export type ToastPosition = 'top-left' | 'top-center' | 'top-right' | 'bottom-left' | 'bottom-center' | 'bottom-right';

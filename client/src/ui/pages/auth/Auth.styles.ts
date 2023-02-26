@@ -42,7 +42,6 @@ export const AuthBlock = styled.div`
             font-size: 24px;
             font-weight: bold;
             line-height: 1.2;
-            padding-bottom: 54px;
         }
     }
 

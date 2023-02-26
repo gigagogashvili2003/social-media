@@ -9,13 +9,30 @@ import CustomFormProvider from '@/ui/library/form-provider/CustomFormProvider';
 import FormInput from '@/ui/library/form-input/FormInput';
 import { emailValidation, passwordValidation } from '@/utils/validatons';
 import { Link } from 'react-router-dom';
+import { sendUserLoginRequest } from '@/services/user';
+import { FieldValues } from 'react-hook-form';
+import useUserStore from '@/store/user';
+import { useState } from 'react';
+import ErrorText from '@/ui/components/error/ErrorText';
 
 const Login = () => {
+    const [formError, setFormError] = useState(null);
     const { isOpen, openModal, closeModal } = useModal(true);
+    const loginHandler = useUserStore(store => store.login);
+    const error = useUserStore(store => store.error);
 
     const defaultInputValues = {
-        email: '',
+        emailOrUsername: '',
         password: '',
+    };
+
+    const sendLoginRequest = async (data: FieldValues) => {
+        try {
+            await loginHandler(data);
+        } catch (err: any) {
+            console.log(err);
+            setFormError(err);
+        }
     };
 
     return (
@@ -25,27 +42,27 @@ const Login = () => {
                     <div className="img_block">
                         <img src={LoginPageUserPhoto} alt="photo" />
                     </div>
-
-                    <CustomFormProvider formWith="50%" defaultValues={defaultInputValues}>
+                    <CustomFormProvider onSubmit={sendLoginRequest} formWith="50%" defaultValues={defaultInputValues}>
                         <AuthBlock>
-                            <div className="title">
+                            <div style={{ paddingBottom: error ? '0' : '54px' }} className="title">
                                 <h1>Member Login</h1>
                             </div>
 
+                            {error && <ErrorText style={{ marginTop: '5px' }} formError={error} />}
                             <div className="inputs_block">
                                 <FormInput
-                                    name="email"
-                                    id="email"
-                                    placeholder="Email"
+                                    name="emailOrUsername"
+                                    id="emailOrUsername"
+                                    placeholder="Email or Username"
                                     AbsoluteComponentIcon={<EmailIcon maxHeight="15px" maxWidth="15px" />}
-                                    validate={emailValidation}
+                                    needValidation={false}
                                 />
                                 <FormInput
                                     name="password"
                                     id="password"
                                     AbsoluteComponentIcon={<PasswordIcon style={{ maxWidth: '15px', maxHeight: '15px' }} />}
                                     placeholder="Password"
-                                    validate={passwordValidation}
+                                    needValidation={false}
                                 />
                             </div>
                             <div className="action_button">

@@ -1,3 +1,5 @@
+import ColorOpacityHex from './color-hex';
+
 const common = {
     // COLORS
     PRIMARY: '#9c95ff',
@@ -8,6 +10,7 @@ const common = {
     BLACK: '#04051F',
     SUPPORT_BLUE: '#0047FD',
     RED: '#FF544A',
+    FORM_ERROR_BG: `#FF544A${ColorOpacityHex[20]}`,
     GREEN: '#3CA857',
     YELLOW: '#F5B308',
     // THEME

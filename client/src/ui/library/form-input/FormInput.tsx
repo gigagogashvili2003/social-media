@@ -12,10 +12,22 @@ interface IFormInputProps extends IProps {
     validationPattern?: ValidationRule<RegExp>;
     minimumLength?: ValidationRule<number>;
     isRequired?: string | ValidationRule<boolean>;
+    needValidation?: boolean;
 }
 
 const FormInput: FC<IFormInputProps> = props => {
-    const { name, margin, padding = '0 0 25px', isRequired, minimumLength, clearIcon, validate, validationPattern, ...rest } = props;
+    const {
+        name,
+        margin,
+        padding = '0 0 25px',
+        isRequired,
+        minimumLength,
+        clearIcon,
+        validate,
+        needValidation = true,
+        validationPattern,
+        ...rest
+    } = props;
 
     const { control, formState, setValue, resetField } = useFormContext();
 
@@ -34,7 +46,13 @@ const FormInput: FC<IFormInputProps> = props => {
                 rules={{ required: isRequired, validate, minLength: minimumLength, pattern: validationPattern }}
                 render={({ field, formState: { dirtyFields } }) => {
                     return (
-                        <Input {...field} {...rest} hasError={hasError} clearInput={clearInput} isSuccess={dirtyFields[name] && hasError === false} />
+                        <Input
+                            {...field}
+                            {...rest}
+                            hasError={hasError && needValidation}
+                            clearInput={clearInput}
+                            isSuccess={dirtyFields[name] && hasError === false && needValidation}
+                        />
                     );
                 }}
             />

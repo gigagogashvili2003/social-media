@@ -7,14 +7,16 @@ function App() {
         <BrowserRouter>
             <ThemeProvider theme="light">
                 <Routes>
-                    {routes.map(({ path, Component, Layout }) => (
+                    {routes.map(({ path, Component, Layout, AuthCheck }) => (
                         <Route
                             key={path}
                             path={path}
                             element={
-                                <Layout>
-                                    <Component />
-                                </Layout>
+                                <AuthCheck>
+                                    <Layout>
+                                        <Component />
+                                    </Layout>
+                                </AuthCheck>
                             }
                         />
                     ))}

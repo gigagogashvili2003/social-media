@@ -36,7 +36,7 @@ body {
 }
 
 html {
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins",sans-serif;
 }
 
 article,aside,details,figcaption,figure,
@@ -57,6 +57,8 @@ q:before, q:after {
     content:'';
     content:none;
 }
+
+
 
 a {
     margin:0;

@@ -8,13 +8,16 @@ import CustomFormProvider from '@/ui/library/form-provider/CustomFormProvider';
 import FormInput from '@/ui/library/form-input/FormInput';
 import { confirmPasswordValidation, emailValidation, passwordValidation, usernameValidation } from '@/utils/validatons';
 import Flex from '@/ui/components/flex/Flex';
-import { Link } from 'react-router-dom';
-import { FieldErrors, FieldValue, FieldValues } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import { sendUserSignupRequest } from '@/services/user';
-import { IUserType } from '@/types';
+import { FieldValues } from 'react-hook-form';
+import { useState } from 'react';
+import ErrorText from '@/ui/components/error/ErrorText';
 
 const Register = () => {
     const { isOpen, openModal, closeModal } = useModal(true);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const defaultInputValues = {
         firstname: '',
@@ -25,10 +28,14 @@ const Register = () => {
         confirmPassword: '',
     };
 
-    console.log(import.meta.env);
-
     const sendRegisterRequest = async (data: FieldValues) => {
-        await sendUserSignupRequest(data);
+        try {
+            await sendUserSignupRequest(data);
+            navigate('/login', { replace: true });
+        } catch (err: any) {
+            console.log(err);
+            setError(err);
+        }
     };
 
     return (
@@ -42,9 +49,11 @@ const Register = () => {
 
                             return (
                                 <AuthBlock>
-                                    <div className="title">
+                                    <div style={{ paddingBottom: error ? '0' : '54px' }} className="title">
                                         <h1>Member Register</h1>
                                     </div>
+
+                                    {error && <ErrorText style={{ marginTop: '5px' }} formError={error.error} />}
 
                                     <div className="inputs_block">
                                         <Flex columnGap="15px">

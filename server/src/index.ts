@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import "module-alias/register";
 // Routes
 import AuthRoutes from "@/routes/auth/Auth";
+import UserRoutes from "@/routes/user/index";
 
 const app: Express = express();
 
@@ -25,6 +26,7 @@ const DB_URL = process.env.DB_URL as string;
 
 // Requests
 app.use("/api", AuthRoutes);
+app.use("/api/user", UserRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
